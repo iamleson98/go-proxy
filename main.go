@@ -33,6 +33,6 @@ func main() {
 	proxy.OnRequest(goproxy.ReqHostMatches(regexp.MustCompile(`(?i).*\.gif:443$`))).HandleConnect(goproxy.AlwaysReject)
 
 	// Start the proxy server
-	log.Println("Starting proxy on :8080")
-	log.Fatal(http.ListenAndServe(":8080", proxy))
+	log.Println("Starting proxy on :8000")
+	log.Fatal(http.ListenAndServe(":8000", proxy))
 }
