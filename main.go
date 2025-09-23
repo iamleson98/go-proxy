@@ -47,33 +47,6 @@ func main() {
 		return r, nil
 	})
 
-	// Block access to Reddit during work hours
-	proxy.OnRequest(goproxy.DstHostIs("www.reddit.com")).DoFunc(func(req *http.Request, ctx *goproxy.ProxyCtx) (*http.Request, *http.Response) {
-		hour := time.Now().Hour()
-		if hour >= 8 && hour <= 17 {
-			resp := goproxy.NewResponse(req, goproxy.ContentTypeText, http.StatusForbidden, "Access to Reddit is blocked during work hours.")
-			return req, resp
-		}
-
-		return req, nil
-	})
-
-	// Reject HTTPS connections to *.gif files
-	proxy.OnRequest().DoFunc(func(r *http.Request, ctx *goproxy.ProxyCtx) (*http.Request, *http.Response) {
-		ip := r.Header.Get("X-Forwarded-For")
-		if ip != "" {
-			// May contain multiple IPs, take the first one
-			parts := strings.Split(ip, ",")
-			first := strings.TrimSpace(parts[0])
-			return r, nil
-		}
-
-		// Fallback to RemoteAddr
-		ip, _, _ = net.SplitHostPort(r.RemoteAddr)
-
-		return r, nil
-	})
-
 	// Start the proxy server
 	log.Println("Starting proxy on :8000")
 	log.Fatal(http.ListenAndServe(":8000", proxy))
