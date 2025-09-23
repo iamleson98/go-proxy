@@ -16,7 +16,7 @@ var whitelist = map[string]bool{
 
 func main() {
 	proxy := goproxy.NewProxyHttpServer()
-	proxy.Verbose = true // Enable logging
+	proxy.Verbose = false // Enable logging
 
 	proxy.OnRequest().DoFunc(func(r *http.Request, ctx *goproxy.ProxyCtx) (*http.Request, *http.Response) {
 		var clientIP string
