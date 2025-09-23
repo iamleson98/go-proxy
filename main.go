@@ -35,12 +35,10 @@ func main() {
 		}
 
 		if !whitelist[clientIP] {
-			log.Printf("❌ Blocked IP: %s", clientIP)
 			resp := goproxy.NewResponse(r, goproxy.ContentTypeText, http.StatusForbidden, "Your IP is not whitelisted.")
 			return r, resp
 		}
 
-		log.Printf("✅ Allowed IP: %s", clientIP)
 		return r, nil
 	})
 
@@ -68,13 +66,11 @@ func main() {
 			// May contain multiple IPs, take the first one
 			parts := strings.Split(ip, ",")
 			first := strings.TrimSpace(parts[0])
-			fmt.Println("1", first)
 			return r, nil
 		}
 
 		// Fallback to RemoteAddr
 		ip, _, _ = net.SplitHostPort(r.RemoteAddr)
-		fmt.Println("2", ip)
 
 		return r, nil
 	})
