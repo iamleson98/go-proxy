@@ -12,6 +12,7 @@ import (
 var whitelist = map[string]bool{
 	"10.52.0.121":   true,
 	"10.52.198.146": true,
+	"10.52.196.141": true,
 }
 
 func main() {
